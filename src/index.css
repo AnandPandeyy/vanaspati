@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+@theme {
+  --color-mint-50: #edf7ed;
+  --color-mint-100: #d4ebd4;
+  --color-mint-200: #b8ddb8;
+  --color-olive-500: #6b8f3e;
+  --color-olive-600: #5a7a34;
+  --color-olive-700: #4a652b;
+  --font-family-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Base styles */
+body {
+  font-family: var(--font-family-sans);
+  background-color: #edf7ed;
+  margin: 0;
+  min-height: 100vh;
+}
+
+/* Moisture bar gradients */
+.moisture-bar-poor {
+  background: linear-gradient(to right, #ef4444, #f97316, #eab308);
+}
+
+.moisture-bar-good {
+  background: linear-gradient(to right, #4ade80, #16a34a);
+}
+
+/* Card styling */
+.card {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #b8ddb8;
+  border-radius: 3px;
+}
+
+/* Modal overlay */
+.modal-overlay {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+}
+
+/* Leaf decorative background */
+.leaf-bg-top-right {
+  position: fixed;
+  top: -30px;
+  right: -30px;
+  width: 280px;
+  height: 280px;
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.leaf-bg-bottom-left {
+  position: fixed;
+  bottom: -40px;
+  left: -40px;
+  width: 320px;
+  height: 320px;
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Add Plant button */
+.btn-add-plant {
+  background-color: #6b8f3e;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.btn-add-plant:hover {
+  background-color: #5a7a34;
+  transform: translateY(-1px);
+}
+
+/* Card leaf decoration */
+.card-leaf {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 80px;
+  height: 80px;
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+/* Notification badge */
+.notification-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  background-color: #ef4444;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+/* Smooth animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.3s ease-out forwards;
+}
