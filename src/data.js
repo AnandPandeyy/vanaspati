@@ -2,7 +2,6 @@ export const plantsData = [
   {
     id: 1,
     name: 'Eggplant',
-    emoji: '🍆',
     image: '/eggplant.png',
     status: 'Watered 2d ago',
     moistureQuality: 'Poor',
@@ -12,7 +11,6 @@ export const plantsData = [
   {
     id: 2,
     name: 'Tomato',
-    emoji: '🍅',
     image: '/tomato.png',
     status: 'Watered 5h ago',
     moistureQuality: 'Good',

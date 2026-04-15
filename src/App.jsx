@@ -11,9 +11,25 @@ import { plantsData as initialPlants } from './data'
 export default function App() {
   const [plants, setPlants] = useState(initialPlants)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [plantToEdit, setPlantToEdit] = useState(null)
 
-  const handleAddPlant = (newPlant) => {
-    setPlants((prev) => [...prev, newPlant])
+  const handleSubmitPlant = (plantData) => {
+    if (plantToEdit) {
+      setPlants((prev) => prev.map(p => p.id === plantData.id ? plantData : p))
+    } else {
+      setPlants((prev) => [...prev, plantData])
+    }
+    setIsModalOpen(false)
+  }
+
+  const handleEditClick = (plant) => {
+    setPlantToEdit(plant)
+    setIsModalOpen(true)
+  }
+
+  const handleAddClick = () => {
+    setPlantToEdit(null)
+    setIsModalOpen(true)
   }
 
   return (
@@ -42,7 +58,7 @@ export default function App() {
             </p>
             {plants.map((plant, index) => (
               <div key={plant.id} style={{ animationDelay: `${index * 0.1}s` }}>
-                <PlantCard plant={plant} />
+                <PlantCard plant={plant} onEdit={handleEditClick} />
               </div>
             ))}
           </section>
@@ -64,7 +80,7 @@ export default function App() {
 
             {/* Card 3 — Add New Plant */}
             <button
-              onClick={() => setIsModalOpen(true)}
+              onClick={handleAddClick}
               className="btn-add-plant w-full py-3.5 rounded-full text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-lg shadow-[#6b8f3e]/20"
               id="add-plant-btn"
             >
@@ -79,7 +95,8 @@ export default function App() {
       <AddPlantModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        onAdd={handleAddPlant}
+        onSubmit={handleSubmitPlant}
+        plantToEdit={plantToEdit}
       />
     </div>
   )

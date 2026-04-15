@@ -1,12 +1,24 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { X } from 'lucide-react'
 
-export default function AddPlantModal({ isOpen, onClose, onAdd }) {
+export default function AddPlantModal({ isOpen, onClose, onSubmit, plantToEdit }) {
   const [formData, setFormData] = useState({
     name: '',
     type: '',
     image: null,
   })
+
+  useEffect(() => {
+    if (plantToEdit) {
+      setFormData({
+        name: plantToEdit.name || '',
+        type: plantToEdit.type || '',
+        image: plantToEdit.image || null,
+      })
+    } else {
+      setFormData({ name: '', type: '', image: null })
+    }
+  }, [plantToEdit, isOpen])
 
   const handleImageChange = (e) => {
     const file = e.target.files[0]
@@ -24,16 +36,26 @@ export default function AddPlantModal({ isOpen, onClose, onAdd }) {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (formData.name && formData.type) {
-      onAdd({
-        id: Date.now(),
-        name: formData.name,
-        emoji: '🌱',
-        image: formData.image || '/eggplant.png',
-        status: 'Waiting for sensor data',
-        moistureQuality: 'Good',
-        moistureChecked: 'checked just now',
-        moistureLevel: 50,
-      })
+      if (plantToEdit) {
+        onSubmit({
+          ...plantToEdit,
+          name: formData.name,
+          type: formData.type,
+          image: formData.image || plantToEdit.image,
+        })
+      } else {
+        onSubmit({
+          id: Date.now(),
+          name: formData.name,
+          type: formData.type,
+          emoji: '🌱',
+          image: formData.image || '/eggplant.png',
+          status: 'Waiting for sensor data',
+          moistureQuality: 'Good',
+          moistureChecked: 'checked just now',
+          moistureLevel: 50,
+        })
+      }
       setFormData({ name: '', type: '', image: null })
       onClose()
     }
@@ -47,7 +69,7 @@ export default function AddPlantModal({ isOpen, onClose, onAdd }) {
       >
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
-          <h2 className="font-bold text-xl text-[#1a1a1a]">Add New Plant</h2>
+          <h2 className="font-bold text-xl text-[#1a1a1a]">{plantToEdit ? 'Edit Plant' : 'Add New Plant'}</h2>
           <button
             onClick={onClose}
             className="p-1.5 rounded-xl hover:bg-gray-100 transition-colors"
@@ -123,7 +145,7 @@ export default function AddPlantModal({ isOpen, onClose, onAdd }) {
               className="flex-1 py-2.5 rounded-full btn-add-plant text-white text-sm font-semibold"
               id="submit-plant"
             >
-              Add Plant
+              {plantToEdit ? 'Save Changes' : 'Add Plant'}
             </button>
           </div>
         </form>

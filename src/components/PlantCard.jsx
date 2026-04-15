@@ -1,13 +1,22 @@
-import { Droplets } from 'lucide-react'
+import { Droplets, Pencil } from 'lucide-react'
 import { CardLeaf } from './LeafDecorations'
 
-export default function PlantCard({ plant }) {
+export default function PlantCard({ plant, onEdit }) {
   const isPoor = plant.moistureQuality === 'Poor'
 
   return (
     <div className="card relative overflow-hidden p-4 sm:p-5 animate-fade-in" id={`plant-card-${plant.id}`}>
       {/* Decorative leaf */}
       <CardLeaf />
+
+      {/* Edit button */}
+      <button 
+        onClick={() => onEdit && onEdit(plant)}
+        className="absolute top-4 right-4 z-10 p-2 rounded-full hover:bg-gray-100 transition-colors text-gray-400 hover:text-[#6b8f3e]"
+        title="Edit Plant"
+      >
+        <Pencil size={16} />
+      </button>
 
       <div className="flex gap-4 sm:gap-5">
         {/* Plant photo */}
